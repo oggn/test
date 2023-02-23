@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .toggleBG {
+            background: #CCCCCC;
+            width: 75px;
+            height: 25px;
+            border: 1px solid #CCCCCC;
+            border-radius: 15px;
+        }
+
+        .toggleFG {
+            background: #FFFFFF;
+            width: 30px;
+            height: 20px;
+            border: none;
+            border-radius: 15px;
+            position: relative;
+            left: 0px;
+        }
+    </style>
+    <div class="toggleBG" onclick="getToggleBtnState(`buttonID`);">
+        <input type="button" id='buttonID' class='toggleFG' value="KO" />
+    </div>
+    <script>
+        $(document).on('click', '.toggleBG', function () {
+            var toggleBG = $(this);
+            var toggleFG = $(this).find('.toggleFG');
+            var left = toggleFG.css('left');
+            if (left == '40px') {
+                toggleBG.css('background', '#CCCCCC');
+                toggleActionStart(toggleFG, 'TO_LEFT');
+            } else if (left == '0px') {
+                toggleBG.css('background', '#53FF4C');
+                toggleActionStart(toggleFG, 'TO_RIGHT');
+            }
+        });
+
+        // 토글 버튼 이동 모션 함수
+        function toggleActionStart(toggleBtn, LR) {
+            // 0.01초 단위로 실행
+            var intervalID = setInterval(
+                function () {
+                    // 버튼 이동
+                    var left = parseInt(toggleBtn.css('left'));
+                    left += (LR == 'TO_RIGHT') ? 5 : -5;
+                    if (left >= 0 && left <= 40) {
+                        left += 'px';
+                        toggleBtn.css('left', left);
+                    }
+                }, 10);
+            setTimeout(function () {
+                clearInterval(intervalID);
+            }, 201);
+        }
+
+        function getToggleBtnState(toggleBtnId) {
+            const left_px = parseInt($('#' + toggleBtnId).css('left'));
+            if (left_px > 0) {
+                $("#buttonID").attr('value', 'KO');
+                // location.href = "https://wemerakl.com";
+            } else {
+                $("#buttonID").attr('value', 'EN');
+                // location.href = "https://wemerakl.com/en";
+            }
+        }
+    </script>
+</body>
+
+</html>
