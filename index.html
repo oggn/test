@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<h1>안녕하세요 github테스트중입니다.</h1>
+<button onclick="sendSMS()">안녕하세요 github테스트중입니다.</button>
+<script>
+    function sendSMS() {
+        var text = '안녕!'
+        location.href='sms:;body=' + encodeURIComponent(text);
+    }
+</script>
 </body>
 </html>
